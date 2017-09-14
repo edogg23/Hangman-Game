@@ -54,10 +54,13 @@ document.onkeyup = function(event) {
     				guessedWord[i] = keyPressed;
     				matchFound = true;
     			}
+
+                console.log("match found? " + matchFound);
     		}
 
     		// Updates the HTML
     		console.log(guessedWord);
+            elementWord[0].innerHTML = guessedWord;
     		console.log(guessesRemaining);
     		console.log(guessedLetters);
     		elementWord.innerHTML = guessedWord;
