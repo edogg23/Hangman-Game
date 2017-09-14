@@ -1,5 +1,3 @@
-// console.log("Hello");
-
 var wordBank = [
 	"count", 
 	"bank",
@@ -45,6 +43,7 @@ document.onkeyup = function(event) {
     		guessedLetters.push(keyPressed);
     		console.log(guessedLetters);
     		guessesRemaining--;
+            elementGuessesRemaining[0].innerHTML = guessesRemaining; //display # of guesses to HTML
     		console.log(guessesRemaining);
 
     		var matchFound = false;
