@@ -8,7 +8,7 @@ var wordBank = [
 	"interest",
 	"loan"
 ];
-var wordChoice = wordBank[Math.floor(Math.random() * wordBank.length)];
+var wordChoice = wordBank[Math.floor(Math.random() * wordBank.length)];  //chooses a randome word from wordBank
 console.log("computer word " + wordChoice);
 
 var elementWord = document.getElementsByClassName("hangman-word");
@@ -24,7 +24,7 @@ for (var i = 0; i < wordLength; i++) {
 var guessesRemaining = 15;
 var guessedLetters = [];
 
-
+console.log("guessed word b4: " + guessedWord);
 elementWord[0].innerHTML = guessedWord;
 elementGuessesRemaining[0].innerHTML = guessesRemaining;
 
@@ -51,20 +51,34 @@ document.onkeyup = function(event) {
 
     		var matchFound = false;
 
+            //compares letters and swaps out _ if the letter matches
     		for (var i = 0; i < wordChoice.length; i++){
     			wordChoice.charAt(i);
     			if (wordChoice.charAt(i) == keyPressed) {
     				guessedWord[i] = keyPressed;
     				matchFound = true;
     			}
-
-                console.log("match found? " + matchFound);
     		}
 
-    		// Updates the HTML
-    		console.log(guessedWord);
-            elementWord[0].innerHTML = guessedWord;
+            for (var i=0; i < guessedWord.length; i++) {
+                if (guessedWord[i] == "_")  {
+                    console.log("keep guessing");
+                } else {
+                console.log("got it: " + guessedWord);
+                }
+            }
+                
+              
 
+                console.log("match found? " + matchFound);
+                console.log("guessed word: " + guessedWord);
+                console.log("word choice: " + wordChoice);
+
+
+    		// Updates the HTML
+    		// console.log("guessed word: " + guessedWord);
+            elementWord[0].innerHTML = guessedWord;
+            console.log("guessed word: " + guessedWord);
 
 
             console.log("guesses left" + guessesRemaining);
