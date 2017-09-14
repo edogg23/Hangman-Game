@@ -9,7 +9,7 @@ var wordBank = [
 	"loan"
 ];
 var wordChoice = wordBank[Math.floor(Math.random() * wordBank.length)];
-console.log(wordChoice);
+console.log("computer word " + wordChoice);
 
 var elementWord = document.getElementsByClassName("hangman-word");
 var elementGuessesRemaining = document.getElementsByClassName("hangman-guesses-remaining");
@@ -28,6 +28,8 @@ var guessedLetters = [];
 elementWord[0].innerHTML = guessedWord;
 elementGuessesRemaining[0].innerHTML = guessesRemaining;
 
+
+
 document.onkeyup = function(event) {
     	//Gets key pressed by user
     	console.log(event.key);
@@ -42,6 +44,7 @@ document.onkeyup = function(event) {
 
     		guessedLetters.push(keyPressed);
     		console.log(guessedLetters);
+            elementGuessedLetters[0].innerHTML = guessedLetters; //displays letters guessed so far
     		guessesRemaining--;
             elementGuessesRemaining[0].innerHTML = guessesRemaining; //display # of guesses to HTML
     		console.log(guessesRemaining);
@@ -61,12 +64,16 @@ document.onkeyup = function(event) {
     		// Updates the HTML
     		console.log(guessedWord);
             elementWord[0].innerHTML = guessedWord;
-    		console.log(guessesRemaining);
-    		console.log(guessedLetters);
-    		elementWord.innerHTML = guessedWord;
-			elementGuessesRemaining.innerHTML = guessesRemaining;
-			elementGuessedLetters.innerHTML = guessedLetters;
 
+
+
+            console.log("guesses left" + guessesRemaining);
+
+ 
+           if (guessesRemaining == 0) {
+            console.log("out of guesses");
+            alert("Out of guesses");
+           }
     	} 
 
  }
