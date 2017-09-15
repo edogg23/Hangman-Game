@@ -8,65 +8,112 @@ var wordBank = [
 	"interest",
 	"loan"
 ];
-var wordChoice = wordBank[Math.floor(Math.random() * wordBank.length)];  //chooses a randome word from wordBank
-console.log("computer word " + wordChoice);
 
+var gameActive = true;
+
+//these are my scoreboard divs  
 var elementWord = document.getElementsByClassName("hangman-word");
 var elementGuessesRemaining = document.getElementsByClassName("hangman-guesses-remaining");
 var elementGuessedLetters = document.getElementsByClassName("hangman-guessed-letters");
 
-var wordLength = wordChoice.length;
-var guessedWord = [];
-for (var i = 0; i < wordLength; i++) {
-	guessedWord.push("_");
-}   
+//these are my notification divs
+var elementNotifications = document.getElementsByClassName("notification");
+var elementNotificationAlert = document.getElementsByClassName("notification-alert");
+var elementNotificationWin = document.getElementsByClassName("notification-win");
+var elementNotificationLose = document.getElementsByClassName("notification-lose"); 
 
-var guessesRemaining = 15;
-var guessedLetters = [];
+function notification(message, type) {
+    clearNotifications();
+    type[0].innerHTML = message;
+}
 
-console.log("guessed word b4: " + guessedWord);
-elementWord[0].innerHTML = guessedWord;
-elementGuessesRemaining[0].innerHTML = guessesRemaining;
+function clearNotifications() {
+    for (i=0; i < elementNotifications.length; i++){
+        elementNotifications[i].innerHTML = "";
+    }
+}
+
+function initGame() {
+    wordChoice = wordBank[Math.floor(Math.random() * wordBank.length)];  //chooses a randome word from wordBank
+    console.log("computer word " + wordChoice);
+    wordLength = wordChoice.length;
+    guessedWord = [];
+    guessedLetters = [];
+
+    for (var i = 0; i < wordLength; i++) {
+        guessedWord.push("_");
+    }   
+
+    guessesRemaining = 15;
+    guessedLetters = [];
+    correctGuessedLetters = 0;
+
+    //updates HTML
+    console.log("guessed word b4: " + guessedWord);
+    elementWord[0].innerHTML = guessedWord;
+    elementGuessesRemaining[0].innerHTML = guessesRemaining;
+    elementGuessedLetters[0].innerHTML = guessedLetters;
+}
+
+initGame();
+
+var actionRestartGame=document.getElementsByClassName("action-restart");
+actionRestartGame[0].addEventListener("click", function() {
+    initGame();
+    gameActive = true;
+});
 
 
 
 document.onkeyup = function(event) {
-    	//Gets key pressed by user
-    	console.log(event.key);
-    	if (event.which >= 65 && event.which <= 90) {  //letters are in a keycode and makes sure only a letter is pressed. 
-    		var keyPressed = event.key.toLowerCase();
-    		console.log("good!");
+    if (gameActive) {
+        //Gets key pressed by user
+        console.log(event.key);
+        if (event.which >= 65 && event.which <= 90) {  //letters are in a keycode and makes sure only a letter is pressed. 
+            var keyPressed = event.key.toLowerCase();
+            console.log("good!");
 
-    		if (guessedLetters.indexOf(keyPressed) !== -1) {  //means it found the letter. If letter has already been guessed it does nothing
-    			return;
-    		}
+            if (guessedLetters.indexOf(keyPressed) !== -1) {  //means it found the letter. If letter has already been guessed it does nothing
+                return;
+            }
 
 
-    		guessedLetters.push(keyPressed);
-    		console.log(guessedLetters);
+            guessedLetters.push(keyPressed);
+            console.log(guessedLetters);
             elementGuessedLetters[0].innerHTML = guessedLetters; //displays letters guessed so far
-    		guessesRemaining--;
+            guessesRemaining--;
             elementGuessesRemaining[0].innerHTML = guessesRemaining; //display # of guesses to HTML
-    		console.log(guessesRemaining);
+            console.log(guessesRemaining);
 
-    		var matchFound = false;
+
+
+            var matchFound = false;
+
 
             //compares letters and swaps out _ if the letter matches
-    		for (var i = 0; i < wordChoice.length; i++){
-    			wordChoice.charAt(i);
-    			if (wordChoice.charAt(i) == keyPressed) {
-    				guessedWord[i] = keyPressed;
-    				matchFound = true;
-    			}
-    		}
+            
 
-            for (var i=0; i < guessedWord.length; i++) {
-                if (guessedWord[i] == "_")  {
-                    console.log("keep guessing");
-                } else {
-                console.log("got it: " + guessedWord);
+            for (var i = 0; i < wordChoice.length; i++){
+                wordChoice.charAt(i);
+                if (wordChoice.charAt(i) == keyPressed) {
+                    guessedWord[i] = keyPressed;
+                    correctGuessedLetters++;
+                    matchFound = true;
                 }
             }
+
+            if (matchFound && wordChoice.length == correctGuessedLetters) {
+                notification("You Won", elementNotificationWin);
+                gameActive = false;
+            }
+
+            //If they lose
+            if (guessesRemaining == 0){
+                notification("You Lost Fucker", elementNotificationLose);
+                gameActive = false;
+            }
+
+
                 
               
 
@@ -75,20 +122,14 @@ document.onkeyup = function(event) {
                 console.log("word choice: " + wordChoice);
 
 
-    		// Updates the HTML
-    		// console.log("guessed word: " + guessedWord);
+            // Updates the HTML
+            // console.log("guessed word: " + guessedWord);
             elementWord[0].innerHTML = guessedWord;
             console.log("guessed word: " + guessedWord);
 
 
             console.log("guesses left" + guessesRemaining);
-
- 
-           if (guessesRemaining == 0) {
-            console.log("out of guesses");
-            alert("Out of guesses");
-           }
-    	} 
-
+        } 
+    }
  }
 
