@@ -1,3 +1,4 @@
+//words for computer to guess from
 var wordBank = [
 	"count", 
 	"bank",
@@ -9,6 +10,7 @@ var wordBank = [
 	"loan"
 ];
 
+//varible that enables and diables onkeyup functionality
 var gameActive = true;
 
 //these are my scoreboard divs  
@@ -22,6 +24,7 @@ var elementNotificationAlert = document.getElementsByClassName("notification-ale
 var elementNotificationWin = document.getElementsByClassName("notification-win");
 var elementNotificationLose = document.getElementsByClassName("notification-lose"); 
 
+//notificaiton helper functions
 function notification(message, type) {
     clearNotifications();
     type[0].innerHTML = message;
@@ -33,6 +36,7 @@ function clearNotifications() {
     }
 }
 
+//initializes the game. the core init function
 function initGame() {
     wordChoice = wordBank[Math.floor(Math.random() * wordBank.length)];  //chooses a randome word from wordBank
     console.log("computer word " + wordChoice);
@@ -55,16 +59,20 @@ function initGame() {
     elementGuessedLetters[0].innerHTML = guessedLetters;
 }
 
+//first init
 initGame();
 
+//game action divs 
 var actionRestartGame=document.getElementsByClassName("action-restart");
+
+//attach click listener functionality (reset variables and activate game) to the restart button 
 actionRestartGame[0].addEventListener("click", function() {
     initGame();
     gameActive = true;
 });
 
 
-
+//handle hangman guesses
 document.onkeyup = function(event) {
     if (gameActive) {
         //Gets key pressed by user
@@ -109,7 +117,7 @@ document.onkeyup = function(event) {
 
             //If they lose
             if (guessesRemaining == 0){
-                notification("You Lost Fucker", elementNotificationLose);
+                notification("You Lost", elementNotificationLose);
                 gameActive = false;
             }
 
