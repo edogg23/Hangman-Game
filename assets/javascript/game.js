@@ -68,6 +68,7 @@ var actionRestartGame=document.getElementsByClassName("action-restart");
 //attach click listener functionality (reset variables and activate game) to the restart button 
 actionRestartGame[0].addEventListener("click", function() {
     initGame();
+    notification("Let's Play Again", elementNotificationWin);
     gameActive = true;
 });
 
@@ -117,7 +118,7 @@ document.onkeyup = function(event) {
 
             //If they lose
             if (guessesRemaining == 0){
-                notification("You Lost", elementNotificationLose);
+                notification("You Lost dude", elementNotificationLose);
                 gameActive = false;
             }
 
